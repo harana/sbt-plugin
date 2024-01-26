@@ -19,15 +19,14 @@ object Plugin extends AutoPlugin {
           organization := "com.harana",
           name := id,
           githubRepository := id,
-          Dependencies.compilerPlugins,
+          Library.compilerPlugins,
           Settings.common,
           Settings.jvm,
-          ThirdPartyResolvers.all,
-          unmanagedBase := (baseDirectory in ThisBuild).value / "lib",
-          libraryDependencies ++= Dependencies.common.value,
-          libraryDependencies ++= Dependencies.jvm.value,
-          dependencyOverrides ++= Dependencies.jvmOverrides.value,
-          excludeDependencies ++= Dependencies.jvmExcludes.value
+          unmanagedBase := (ThisBuild / baseDirectory).value / "lib",
+          libraryDependencies ++= Library.common.value,
+          libraryDependencies ++= Library.jvm.value,
+          dependencyOverrides ++= Library.globalDependencyOverrides.value,
+          excludeDependencies ++= Library.globalExclusions.value
         )
   }
 }

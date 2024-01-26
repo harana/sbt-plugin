@@ -21,15 +21,12 @@ object Plugin extends AutoPlugin {
           organization := "com.harana",
           name := id,
           githubRepository := id,
-          Dependencies.compilerPlugins,
+          Library.compilerPlugins,
           Settings.common,
           Settings.js,
-          ThirdPartyResolvers.all,
-          libraryDependencies ++= Dependencies.common.value,
-          libraryDependencies ++=  Dependencies.js.value,
-          dependencyOverrides := Dependencies.jsOverrides.value,
-          npmDependencies := Dependencies.npm.value,
-          npmDevDependencies := Dependencies.npmDev.value
+          libraryDependencies ++= Library.common.value,
+          libraryDependencies ++=  Library.js.value,
+          dependencyOverrides := Library.jsOverrides.value,
         )
   }
 }

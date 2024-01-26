@@ -2,25 +2,37 @@ package com.harana.sbt.common
 
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
-import scalajsbundler.sbtplugin.ScalaJSBundlerPlugin.autoImport._
 import sbtghpackages._
 import sbtghpackages.GitHubPackagesKeys._
 import sbt.Keys.{baseDirectory, _}
 import sbt._
+import sbt.nio.Keys.{ReloadOnSourceChanges, onChangedBuildSource}
+import sbt.{File, nio, _}
+import org.scalablytyped.converter.plugin.STKeys._
+import org.scalablytyped.converter.plugin.ScalablyTypedPluginBase.autoImport._
+
+import scala.sys.process._
+import org.scalajs.linker.interface.Report
 
 object Settings {
+
+  lazy val buildFrontend = taskKey[Unit]("")
+  lazy val buildJs = taskKey[Map[String, File]]("")
+  lazy val buildCss = taskKey[Unit]("")
+  lazy val frontendReport = taskKey[(Report, File)]("")
+  lazy val isRelease = sys.env.get("RELEASE").contains("true")
 
   def common = Seq(
     scalaVersion                              := "2.12.18",
     scalacOptions                             ++= Seq(
                                                       "-deprecation", "-feature", "-unchecked", "-language:higherKinds", "-language:implicitConversions",
                                                       "-language:postfixOps", "-Xfuture", "-Ypartial-unification", "-Yrangepos", "-Ybackend-parallelism", "8",
-                                                      "-Ybackend-worker-queue", "8"
+                                                      "-Ybackend-worker-queue", "8", "-language:experimental.macros"
                                                     ),
-    sources in (doc)                          := Seq(),
-    publishArtifact in packageDoc             := false,
+    doc / sources                             := Seq(),
+    packageDoc / publishArtifact              := false,
     publishArtifact in (Compile, packageDoc)  := false,
-    publishArtifact in packageSrc             := false,
+    packageSrc / publishArtifact              := false,
     publishArtifact in (Compile, packageSrc)  := false,
 
     githubOwner                               := "harana",
@@ -28,23 +40,81 @@ object Settings {
     githubTokenSource                         := TokenSource.Environment("GITHUB_TOKEN"),
 
     updateOptions                             := updateOptions.value.withCachedResolution(true),
-    testFrameworks                            := Seq(new TestFramework("zio.test.sbt.ZTestFramework"))
+    testFrameworks                            := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
+    crossPaths                                := true,
+    resolvers                                 ++= Library.resolvers,
+    dependencyOverrides                       ++= Library.globalDependencyOverrides.value,
+    updateOptions                             := updateOptions.value.withCachedResolution(true),
+    Test / parallelExecution                  := false,
+    Global / nio.Keys.onChangedBuildSource    := ReloadOnSourceChanges
   )
 
   val js = Seq(
 		scalaJSUseMainModuleInitializer           := true,
-    scalaJSLinkerConfig                       ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-		useYarn                                   := true,
-		version in webpack                        := "4.46.0",
-		version in startWebpackDevServer          := "3.1.4",
-		webpackDevServerExtraArgs in fastOptJS    := Seq("--inline", "--hot"),
-		webpackEmitSourceMaps                     := false,
-		webpackBundlingMode in fastOptJS          := BundlingMode.LibraryOnly(),
-		webpackBundlingMode in fullOptJS          := BundlingMode.Application,
-		webpackConfigFile in fastOptJS            := Some(baseDirectory.value / "webpack-dev.js"),
-		webpackConfigFile in fullOptJS            := Some(baseDirectory.value / "webpack-prod.js"), 
-    unmanagedBase                             := (unmanagedBase in ThisProject).value
-  )
+    Global / onChangedBuildSource             := ReloadOnSourceChanges,
+    scalaJSLinkerConfig                       ~= (_.withModuleKind(ModuleKind.ESModule)),
+    libraryDependencySchemes                  ++= Library.jsLibraryDependencySchemes.value,
+    unmanagedBase                             := (ThisProject / unmanagedBase).value,
+    externalNpm                               := {
+                                                  sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
+                                                  baseDirectory.value
+                                                 },
+    stIgnore ++= List(
+      "@headlessui/react",
+      "@heroicons/react",
+      "@lit/reactive-element",
+      "@mapbox/togeojson",
+      "@niivue/niivue",
+      "@shoelace-style/shoelace",
+      "@tailwindcss/aspect-ratio",
+      "@tailwindcss/forms",
+      "@tailwindcss/typography",
+      "@xeokit/xeokit-sdk",
+      "history",
+      "katex",
+      "keen-slider",
+      "leaflet",
+      "meshgrad",
+      "notebookjs",
+      "prismjs",
+      "react-json-lens",
+      "react-leaflet-kml",
+      "react-proxy",
+      "react-virtuoso",
+      "styled-components",
+      "tailwindcss",
+      "tauri-plugin-log-api",
+      "type-fest",
+      "vite",
+      "xlsx-viewer"
+    ),
+    stFlavour := Flavour.Slinky,
+    stIncludeDev := true,
+    stMinimize := Selection.AllExcept("@tauri-apps/api"),
+    stOutputPackage := "com.harana.js",
+    stQuiet := true,
+    Compile / packageSrc / mappings ++= {
+      val base = (Compile / sourceManaged).value
+      val files = (Compile / managedSources).value
+      files.map { f => (f, f.relativeTo(base).get.getPath) }
+    },
+    frontendReport := {
+      if (isRelease) (Compile / fullLinkJS).value.data -> (Compile / fullLinkJS / scalaJSLinkerOutputDirectory).value
+      else (Compile / fastLinkJS).value.data -> (Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
+    },
+    buildCss := {
+      s"pnpm run --dir ${baseDirectory.value.toString} css" !
+    },
+    buildFrontend := {
+      val (report, fm) = frontendReport.value
+      IO.listFiles(fm).toList.map { file =>
+        val (name, ext) = file.baseAndExt
+        val out = baseDirectory.value / "target" / (name + "." + ext)
+        IO.copyFile(file, out)
+        file.name -> out
+      }.toMap
+    },
+ )
 
   val javaLaunchOptions                        = if (javaVersion > 9) Seq(
                                                       "--add-modules=jdk.incubator.foreign",
@@ -70,11 +140,11 @@ object Settings {
                                                     ) else Seq()
 
   val jvm = Seq(
-    unmanagedBase                             := (unmanagedBase in ThisProject).value,
-    fork in run                               := true,
+    unmanagedBase                             := (ThisProject / unmanagedBase).value,
+    run / fork                                := true,
     javacOptions                              ++= Seq("-encoding", "UTF-8"),
     javaOptions                               ++= javaLaunchOptions,
-    javaOptions in Universal                  ++= javaLaunchOptions.map(lo => s"-J$lo"),
+    Universal / javaOptions                   ++= javaLaunchOptions.map(lo => s"-J$lo"),
     javaOptions                               ++= {
                                                     val Digits = "^(\\d+)$".r
                                                     sys.env.get("HARANA_DEBUG") match {
@@ -91,12 +161,12 @@ object Settings {
   val copyOSGIBundlesTask                     = taskKey[Unit]("Copy OSGI system bundles task")
   val OsgiStage                               = config("CopyOSGIBundlesTask")
   val osgi                                    = Seq(
-                                                  libraryDependencies in OsgiStage := Dependencies.osgi.value,
-                                                  libraryDependencies ++= Dependencies.osgi.value,
+                                                  OsgiStage / libraryDependencies := Library.osgi.value,
+                                                  libraryDependencies ++= Library.osgi.value,
                                                   copyOSGIBundlesTask := {
-                                                    (update in OsgiStage).value.allFiles.foreach { f =>
-                                                      (libraryDependencies in OsgiStage).value.foreach { lib =>
-                                                        (dependencyClasspath in Compile).value.foreach { dep =>
+                                                    (OsgiStage / update).value.allFiles.foreach { f =>
+                                                      (OsgiStage / libraryDependencies).value.foreach { lib =>
+                                                        (Compile / dependencyClasspath).value.foreach { dep =>
                                                           if (dep.metadata.get(moduleID.key).get.equals(lib) && !dep.data.getName.contains("felix.framework")) {
                                                             IO.copyFile(dep.data, new File("bundles",dep.data.getName))
                                                           }
@@ -104,7 +174,7 @@ object Settings {
                                                       }
                                                     }
                                                   },
-    compile in Compile                        := ((compile in Compile) dependsOn copyOSGIBundlesTask).value,
+    Compile / compile                         := ((Compile / compile) dependsOn copyOSGIBundlesTask).value,
     //mappings in Universal                   ++= directory(baseDirectory.value / "bundles"),
     //mappings in Universal                   ++= directory(baseDirectory.value / "plugins"),
   ) ++ inConfig(OsgiStage)(Classpaths.ivyBaseSettings)

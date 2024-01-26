@@ -25,14 +25,23 @@ lazy val commonSettings = Seq(
       moduleName      := "sbt_common",
       name            := "sbt",
       resolvers += Resolver.sonatypeRepo("snapshots"),
-      addSbtPlugin("org.portable-scala"           %   "sbt-scalajs-crossproject"    %   "1.1.0"),
-      addSbtPlugin("org.scala-js"                 %   "sbt-scalajs"                 %   "1.7.1"),
-      addSbtPlugin("ch.epfl.scala"                %   "sbt-scalajs-bundler"         %   "0.20.0"),
-      addSbtPlugin("com.eed3si9n"                 %   "sbt-assembly"                %   "1.1.0"),
-      addSbtPlugin("com.github.sbt"               %   "sbt-native-packager"         %   "1.9.2"),
-      addSbtPlugin("com.timushev.sbt"             %   "sbt-updates"                 %   "0.5.3"),
-      addSbtPlugin("com.codecommit"               %   "sbt-github-packages"         %   "0.5.3"),
-      addSbtPlugin("com.rallyhealth.sbt"          %   "sbt-git-versioning"          %   "1.6.0")
+      addSbtPlugin("ch.epfl.scala"                  % "sbt-scalafix"              % "0.11.1"),
+      addSbtPlugin("com.codecommit"                 % "sbt-github-packages"       % "0.5.3"),
+      addSbtPlugin("com.eed3si9n"                   % "sbt-assembly"              % "1.2.0"),
+      addSbtPlugin("com.eed3si9n"                   % "sbt-buildinfo"             % "0.11.0"),
+      addSbtPlugin("com.geirsson"                   % "sbt-ci-release"            % "1.5.7"),
+      addSbtPlugin("com.github.sbt"                 % "sbt-jni"                   % "1.5.4"),
+      addSbtPlugin("com.github.sbt"                 % "sbt-native-packager"       % "1.9.16"),
+      addSbtPlugin("com.rallyhealth.sbt"            % "sbt-git-versioning"        % "1.6.0"),
+      addSbtPlugin("com.timushev.sbt"               % "sbt-updates"               % "0.6.3"),
+      addSbtPlugin("io.github.cquiroz"              % "sbt-locales"               % "4.2.0"),
+      addSbtPlugin("net.aichler"                    % "sbt-jupiter-interface"     % "0.11.1"),
+      addSbtPlugin("nl.gn0s1s"                      % "sbt-dotenv"                % "3.0.0"),
+      addSbtPlugin("org.portable-scala"             % "sbt-scalajs-crossproject"  % "1.3.0"),
+      addSbtPlugin("org.scala-js"                   % "sbt-scalajs"               % "1.14.0"),
+      addSbtPlugin("org.scalablytyped.converter"    % "sbt-converter"             % "1.0.0-beta42"),
+      addSbtPlugin("org.scalameta"                  % "sbt-scalafmt"              % "2.4.6"),
+      addDependencyTreePlugin
     )
     .enablePlugins(SbtPlugin)
     .enablePlugins(SemVerPlugin)

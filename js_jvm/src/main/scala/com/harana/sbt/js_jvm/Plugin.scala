@@ -46,37 +46,32 @@ object Plugin extends AutoPlugin {
           organization := "com.harana",
           name := id,
           githubRepository := id,
-          Dependencies.compilerPlugins,
-          libraryDependencies ++= Dependencies.common.value,
+          Library.compilerPlugins,
+          libraryDependencies ++= Library.common.value,
           Settings.common,
-          ThirdPartyResolvers.all,
-          unmanagedBase := (baseDirectory in ThisBuild).value / "lib"
+          unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
         )
         .jsSettings(
           name := id,
-          Dependencies.compilerPlugins,
-          dependencyOverrides ++= Dependencies.jsOverrides.value,
+          Library.compilerPlugins,
+          dependencyOverrides ++= Library.globalDependencyOverrides.value,
           fastCompile := { compileJS(baseDirectory).dependsOn(Compile / fastOptJS / webpack) }.value,
           fullCompile := { compileJS(baseDirectory).dependsOn(Compile / fullOptJS / webpack) }.value,
-          libraryDependencies ++=  Dependencies.js.value,
-          npmDependencies in Compile := Dependencies.npm.value,
-          npmDevDependencies in Compile := Dependencies.npmDev.value,
+          libraryDependencies ++=  Library.js.value,
           scalaJSUseMainModuleInitializer := false,
           Settings.common,
           Settings.js,
-          ThirdPartyResolvers.all,
-          unmanagedBase := (baseDirectory in ThisBuild).value / "lib"
+          unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
         )
         .jvmSettings(
           name := id,
-          Dependencies.compilerPlugins,
-          dependencyOverrides ++= Dependencies.jvmOverrides.value,
-          excludeDependencies ++= Dependencies.jvmExcludes.value,
-          libraryDependencies ++= Dependencies.jvm.value,
+          Library.compilerPlugins,
+          dependencyOverrides ++= Library.globalDependencyOverrides.value,
+          excludeDependencies ++= Library.globalExclusions.value,
+          libraryDependencies ++= Library.jvm.value,
           Settings.common,
           Settings.jvm,
-          ThirdPartyResolvers.all,
-          unmanagedBase := (baseDirectory in ThisBuild).value / "lib"
+          unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
         )
 
     def compileJS(baseDirectory: SettingKey[File]) = {
