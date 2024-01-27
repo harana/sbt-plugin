@@ -45,6 +45,7 @@ lazy val commonSettings = Seq(
       addDependencyTreePlugin
     )
     .enablePlugins(SbtPlugin)
+    .enablePlugins(SemVerPlugin)
 
   lazy val js = project
     .settings(
