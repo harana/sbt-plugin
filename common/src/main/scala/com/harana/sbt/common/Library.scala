@@ -145,8 +145,7 @@ object Library {
 
   val compilerPlugins = Seq(
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
-    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
-    addCompilerPlugin("com.hmemcpy" %% "zio-clippy" % "0.0.1")
+    addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)
   )
 
   val dockerJava = Def.setting(Seq(
@@ -409,15 +408,15 @@ object Library {
   ))
 
   val zio2 = Def.setting(Seq(
-    "dev.zio" %% "zio" % "2.0.20",
+    "dev.zio" %% "zio" % "2.0.21",
     "dev.zio" %% "zio-interop-cats" % "23.0.03",
     "dev.zio" %% "zio-interop-reactivestreams" % "2.0.2",
-    "dev.zio" %% "zio-macros" % "2.0.20",
+    "dev.zio" %% "zio-macros" % "2.0.21",
     "dev.zio" %% "zio-process" % "0.7.2",
-    "dev.zio" %% "zio-streams" % "2.0.20",
-    "dev.zio" %% "zio-test" % "2.0.20" % "test",
-    "dev.zio" %% "zio-test-sbt" % "2.0.20" % "test",
-    "dev.zio" %% "zio-test-magnolia" % "2.0.20" % "test"
+    "dev.zio" %% "zio-streams" % "2.0.21",
+    "dev.zio" %% "zio-test" % "2.0.21" % "test",
+    "dev.zio" %% "zio-test-sbt" % "2.0.21" % "test",
+    "dev.zio" %% "zio-test-magnolia" % "2.0.21" % "test"
   ))
 
   val airtable = Def.setting("dev.fuxing" % "airtable-api" % "0.3.2")

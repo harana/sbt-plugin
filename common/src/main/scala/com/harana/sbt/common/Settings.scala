@@ -23,11 +23,11 @@ object Settings {
   lazy val isRelease = sys.env.get("RELEASE").contains("true")
 
   def common = Seq(
-    scalaVersion                              := "2.12.18",
+    scalaVersion                              := "2.13.12",
     scalacOptions                             ++= Seq(
                                                       "-deprecation", "-feature", "-unchecked", "-language:higherKinds", "-language:implicitConversions",
-                                                      "-language:postfixOps", "-Xfuture", "-Ypartial-unification", "-Yrangepos", "-Ybackend-parallelism", "8",
-                                                      "-Ybackend-worker-queue", "8", "-language:experimental.macros"
+                                                      "-language:postfixOps", "-Yrangepos", "-Ybackend-parallelism", "8", "-Ybackend-worker-queue", "8",
+                                                      "-language:experimental.macros", "-Ymacro-annotations"
                                                     ),
     doc / sources                             := Seq(),
     packageDoc / publishArtifact              := false,
@@ -53,7 +53,6 @@ object Settings {
 		scalaJSUseMainModuleInitializer           := true,
     Global / onChangedBuildSource             := ReloadOnSourceChanges,
     scalaJSLinkerConfig                       ~= (_.withModuleKind(ModuleKind.ESModule)),
-    libraryDependencySchemes                  ++= Library.jsLibraryDependencySchemes.value,
     unmanagedBase                             := (ThisProject / unmanagedBase).value,
     externalNpm                               := {
                                                   sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!

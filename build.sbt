@@ -1,5 +1,6 @@
 lazy val commonSettings = Seq(
     sbtPlugin                                 := true,
+    scalaVersion                              := "2.12.18",
     organization                              := "com.harana",
     githubOwner                               := "harana",
     githubRepository                          := "sbt-plugin",
@@ -44,8 +45,6 @@ lazy val commonSettings = Seq(
       addDependencyTreePlugin
     )
     .enablePlugins(SbtPlugin)
-    .enablePlugins(SemVerPlugin)
-
 
   lazy val js = project
     .settings(

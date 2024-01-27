@@ -11,11 +11,12 @@ import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.scalaJSUseMainModuleInitia
 import sbtcrossproject.CrossPlugin.autoImport._
 import sbtcrossproject.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
-import scalajsbundler.sbtplugin.ScalaJSBundlerPlugin
-import scalajsbundler.sbtplugin.ScalaJSBundlerPlugin.autoImport._
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport._
 import sbtghpackages.GitHubPackagesKeys.githubRepository
 import scala.sys.process._
+import org.scalablytyped.converter.plugin._
+import org.scalablytyped.converter.plugin.STKeys._
+import org.scalablytyped.converter.plugin.ScalablyTypedPluginBase.autoImport._
 
 object Plugin extends AutoPlugin {
 
@@ -24,8 +25,6 @@ object Plugin extends AutoPlugin {
   object autoImport {
 
     val utf8: Charset = Charset.forName("UTF-8")
-    val fastCompile = TaskKey[Unit]("fastCompile")
-    val fullCompile = TaskKey[Unit]("fullCompile")
 
     def haranaRootProject(crossProject: CrossProject): Project =
       Project("root", file(".")).
@@ -40,7 +39,7 @@ object Plugin extends AutoPlugin {
     def haranaCrossProject(id: String): CrossProject =
       CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
         .crossType(CrossType.Full)
-        .jsConfigure(_.enablePlugins(ScalaJSBundlerPlugin))
+        .jsConfigure(_.enablePlugins(ScalablyTypedConverterExternalNpmPlugin))
         .jvmConfigure(_.enablePlugins(JavaAppPackaging, UniversalPlugin))
         .settings(
           organization := "com.harana",
@@ -55,8 +54,7 @@ object Plugin extends AutoPlugin {
           name := id,
           Library.compilerPlugins,
           dependencyOverrides ++= Library.globalDependencyOverrides.value,
-          fastCompile := { compileJS(baseDirectory).dependsOn(Compile / fastOptJS / webpack) }.value,
-          fullCompile := { compileJS(baseDirectory).dependsOn(Compile / fullOptJS / webpack) }.value,
+          libraryDependencySchemes ++= Library.jsLibraryDependencySchemes.value,
           libraryDependencies ++=  Library.js.value,
           scalaJSUseMainModuleInitializer := false,
           Settings.common,
@@ -68,6 +66,7 @@ object Plugin extends AutoPlugin {
           Library.compilerPlugins,
           dependencyOverrides ++= Library.globalDependencyOverrides.value,
           excludeDependencies ++= Library.globalExclusions.value,
+          libraryDependencySchemes ++= Library.jvmLibraryDependencySchemes.value,
           libraryDependencies ++= Library.jvm.value,
           Settings.common,
           Settings.jvm,
