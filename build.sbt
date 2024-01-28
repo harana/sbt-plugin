@@ -30,7 +30,7 @@ lazy val commonSettings = Seq(
       addSbtPlugin("com.codecommit"                 % "sbt-github-packages"       % "0.5.3"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-assembly"              % "1.2.0"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-buildinfo"             % "0.11.0"),
-      addSbtPlugin("com.geirsson"                   % "sbt-ci-release"            % "1.5.7"),
+      addSbtPlugin("com.github.sbt"                   % "sbt-ci-release"            % "1.5.12"),
       addSbtPlugin("com.github.sbt"                 % "sbt-jni"                   % "1.5.4"),
       addSbtPlugin("com.github.sbt"                 % "sbt-native-packager"       % "1.9.16"),
       addSbtPlugin("com.rallyhealth.sbt"            % "sbt-git-versioning"        % "1.6.0"),
