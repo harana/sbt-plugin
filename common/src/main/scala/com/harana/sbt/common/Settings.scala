@@ -1,5 +1,6 @@
 package com.harana.sbt.common
 
+import com.rallyhealth.sbt.versioning.GitVersioningPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
 import sbtghpackages._
@@ -29,24 +30,25 @@ object Settings {
                                                       "-language:postfixOps", "-Yrangepos", "-Ybackend-parallelism", "8", "-Ybackend-worker-queue", "8",
                                                       "-language:experimental.macros", "-Ymacro-annotations"
                                                     ),
-    doc / sources                             := Seq(),
-    packageDoc / publishArtifact              := false,
-    publishArtifact in (Compile, packageDoc)  := false,
-    packageSrc / publishArtifact              := false,
-    publishArtifact in (Compile, packageSrc)  := false,
+    doc / sources                                 := Seq(),
+    packageDoc / publishArtifact                  := false,
+    publishArtifact in (Compile, packageDoc)      := false,
+    packageSrc / publishArtifact                  := false,
+    publishArtifact in (Compile, packageSrc)      := false,
 
-    githubOwner                               := "harana",
-    organization                              := "com.harana",
-    githubTokenSource                         := TokenSource.Environment("GITHUB_TOKEN"),
+    githubOwner                                   := "harana",
+    organization                                  := "com.harana",
+    githubTokenSource                             := TokenSource.Environment("GITHUB_TOKEN"),
 
-    updateOptions                             := updateOptions.value.withCachedResolution(true),
-    testFrameworks                            := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
-    crossPaths                                := true,
-    resolvers                                 ++= Library.resolvers,
-    dependencyOverrides                       ++= Library.globalDependencyOverrides.value,
-    updateOptions                             := updateOptions.value.withCachedResolution(true),
-    Test / parallelExecution                  := false,
-    Global / nio.Keys.onChangedBuildSource    := ReloadOnSourceChanges
+    ThisBuild / gitVersioningSnapshotLowerBound   := "1.0.0",
+    updateOptions                                 := updateOptions.value.withCachedResolution(true),
+    testFrameworks                                := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
+    crossPaths                                    := true,
+    resolvers                                     ++= Library.resolvers,
+    dependencyOverrides                           ++= Library.globalDependencyOverrides.value,
+    updateOptions                                 := updateOptions.value.withCachedResolution(true),
+    Test / parallelExecution                      := false,
+    Global / nio.Keys.onChangedBuildSource        := ReloadOnSourceChanges
   )
 
   val js = Seq(
