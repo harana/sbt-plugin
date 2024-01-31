@@ -30,6 +30,7 @@ object Plugin extends AutoPlugin {
           libraryDependencies ++=  Library.js.value,
           libraryDependencySchemes ++= Library.jsLibraryDependencySchemes.value,
           dependencyOverrides := Library.jsOverrides.value,
+          unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
         )
   }
 }

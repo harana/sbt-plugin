@@ -7,7 +7,6 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt.Keys._
 import sbt.{Def, _}
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.scalaJSUseMainModuleInitializer
 import sbtcrossproject.CrossPlugin.autoImport._
 import sbtcrossproject.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
@@ -56,7 +55,6 @@ object Plugin extends AutoPlugin {
           dependencyOverrides ++= Library.globalDependencyOverrides.value,
           libraryDependencySchemes ++= Library.jsLibraryDependencySchemes.value,
           libraryDependencies ++=  Library.js.value,
-          scalaJSUseMainModuleInitializer := false,
           Settings.common,
           Settings.js,
           unmanagedBase := (ThisBuild / baseDirectory).value / "lib"

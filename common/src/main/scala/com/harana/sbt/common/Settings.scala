@@ -52,7 +52,7 @@ object Settings {
   )
 
   val js = Seq(
-		scalaJSUseMainModuleInitializer           := true,
+		scalaJSUseMainModuleInitializer           := false,
     Global / onChangedBuildSource             := ReloadOnSourceChanges,
     scalaJSLinkerConfig                       ~= (_.withModuleKind(ModuleKind.ESModule)),
     unmanagedBase                             := (ThisProject / unmanagedBase).value,
