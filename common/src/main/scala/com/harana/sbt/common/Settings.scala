@@ -1,6 +1,5 @@
 package com.harana.sbt.common
 
-import com.rallyhealth.sbt.versioning.GitVersioningPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 import com.typesafe.sbt.packager.universal.UniversalPlugin.autoImport._
 import sbtghpackages._
@@ -40,7 +39,6 @@ object Settings {
     organization                                  := "com.harana",
     githubTokenSource                             := TokenSource.Environment("GITHUB_TOKEN"),
 
-    ThisBuild / gitVersioningSnapshotLowerBound   := "1.0.0",
     updateOptions                                 := updateOptions.value.withCachedResolution(true),
     testFrameworks                                := Seq(new TestFramework("zio.test.sbt.ZTestFramework")),
     crossPaths                                    := true,

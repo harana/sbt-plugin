@@ -1,10 +1,10 @@
 package com.harana.sbt.common
 
-import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
-import sbt.Keys.scalaVersion
-import sbt._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport.*
+import sbt.Keys.{resolvers, scalaVersion}
+import sbt.*
 import scalajsbundler.util.JSON
-import sbtghpackages.GitHubPackagesPlugin.autoImport._
+import sbtghpackages.GitHubPackagesPlugin.autoImport.*
 
 import scala.language.postfixOps
 
@@ -534,6 +534,7 @@ object Library {
   val resolvers = Seq(
     Resolver.mavenLocal,
     Resolver.githubPackages("harana"),
+    Resolver.githubPackages("hiyainc-oss"),
     Resolver.jcenterRepo,
     Resolver.sonatypeOssRepos("releases").head,
     Resolver.sonatypeOssRepos("snapshots").head,

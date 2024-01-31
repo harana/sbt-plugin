@@ -1,3 +1,4 @@
+
 lazy val commonSettings = Seq(
     sbtPlugin                                 := true,
     scalaVersion                              := "2.12.18",
@@ -5,9 +6,10 @@ lazy val commonSettings = Seq(
     githubOwner                               := "harana",
     githubRepository                          := "sbt-plugin",
     githubTokenSource                         := TokenSource.Environment("GITHUB_TOKEN"),
-    sources in (doc)                          := Seq(),
+    doc / sources                             := Seq(),
     Compile / packageDoc / publishArtifact    := false,
     Compile / packageSrc / publishArtifact    := false,
+    resolvers                                 += Resolver.url("hoya", url("https://maven.pkg.github.com/hiyainc-oss/sbt-plugin"))(Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
 )
 
   lazy val root = Project("sbt-plugin", file("."))
@@ -25,13 +27,14 @@ lazy val commonSettings = Seq(
       commonSettings,
       moduleName      := "sbt_common",
       name            := "sbt",
+
       addSbtPlugin("ch.epfl.scala"                  % "sbt-scalafix"              % "0.11.1"),
       addSbtPlugin("com.codecommit"                 % "sbt-github-packages"       % "0.5.3"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-assembly"              % "1.2.0"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-buildinfo"             % "0.11.0"),
       addSbtPlugin("com.github.sbt"                 % "sbt-jni"                   % "1.5.4"),
       addSbtPlugin("com.github.sbt"                 % "sbt-native-packager"       % "1.9.16"),
-      addSbtPlugin("com.rallyhealth.sbt"            % "sbt-git-versioning"        % "1.6.0"),
+      addSbtPlugin("com.hiya"                       % "sbt-git-versioning"        % "0.2.0"),
       addSbtPlugin("com.timushev.sbt"               % "sbt-updates"               % "0.6.3"),
       addSbtPlugin("io.github.cquiroz"              % "sbt-locales"               % "4.2.0"),
       addSbtPlugin("net.aichler"                    % "sbt-jupiter-interface"     % "0.11.1"),
@@ -43,7 +46,6 @@ lazy val commonSettings = Seq(
       addDependencyTreePlugin
     )
     .enablePlugins(SbtPlugin)
-    .enablePlugins(SemVerPlugin)
 
   lazy val js = project
     .settings(
