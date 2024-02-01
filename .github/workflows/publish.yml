@@ -41,6 +41,8 @@ jobs:
           ln -s /opt/cache/coursier_cache ~/.cache/coursier
           ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
           ln -s /opt/cache/sbt_boot ~/.sbt/boot
+          ls -alL ~/.sbt
+          
 
       - name: Publish Packages
         env:
