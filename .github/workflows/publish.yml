@@ -47,7 +47,7 @@ jobs:
           if [ ! -f '/home/runner/.sbt/1.0/plugins/credentials.sbt' ]; then
             cat <<EOF > /home/runner/.sbt/1.0/plugins/credentials.sbt
             credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", "nadenf", System.getenv("GITHUB_TOKEN"))
-            EOF
+          EOF
           fi
 
       - name: Install JS Dependencies
