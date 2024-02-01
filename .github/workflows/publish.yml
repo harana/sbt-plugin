@@ -34,10 +34,8 @@ jobs:
         run: |
           mkdir ~/.cache
           mkdir ~/.ivy2
-          mkdir ~/.sbt
           ln -s /opt/cache/coursier_cache ~/.cache/coursier
           ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
-          ln -s /opt/cache/sbt_boot ~/.sbt/boot
 
       - name: Publish Packages
         env:
