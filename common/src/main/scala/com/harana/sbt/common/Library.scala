@@ -22,29 +22,29 @@ object Library {
   val jsOverrides = Def.setting(Seq())
   val jvm = Def.setting(Seq())
 
-  val additionalNpmConfig = Def.setting(Map(
-    "overrides" -> JSON.obj(
-      "oas-xterm-for-react18" -> JSON.obj(
-        "react" -> JSON.str("18.2.0")
-      ),
-      "react-device-detect" -> JSON.obj(
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0"),
-      ),
-      "mini-create-react-context" -> JSON.obj(
-        "react" -> JSON.str("18.2.0")
-      ),
-      "react-lazylog-x" -> JSON.obj(
-        "react-virtualized" -> JSON.str("9.22.5"),
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0")
-      ),
-      "react-virtualized" -> JSON.obj(
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0"),
-      ),
-    )
-  ))
+//  val additionalNpmConfig = Def.setting(Map(
+//    "overrides" -> JSON.obj(
+//      "oas-xterm-for-react18" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0")
+//      ),
+//      "react-device-detect" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0"),
+//      ),
+//      "mini-create-react-context" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0")
+//      ),
+//      "react-lazylog-x" -> JSON.obj(
+//        "react-virtualized" -> JSON.str("9.22.5"),
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0")
+//      ),
+//      "react-virtualized" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0"),
+//      ),
+//    )
+//  ))
 
   val globalDependencyOverrides = Def.setting(Seq(
     "org.apache.curator"      %   "curator-recipes"     % "5.4.0",
@@ -534,11 +534,11 @@ object Library {
   val resolvers = Seq(
     Resolver.mavenLocal,
     Resolver.githubPackages("harana"),
-    Resolver.githubPackages("hiyainc-oss"),
     Resolver.jcenterRepo,
     Resolver.sonatypeOssRepos("releases").head,
     Resolver.sonatypeOssRepos("snapshots").head,
     Resolver.url("heroku-sbt-plugin-releases", url("https://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns),
+    Resolver.url("hoya", url("https://maven.pkg.github.com/hiyainc-oss/sbt-plugin"))(Patterns("[organisation]/[module]/[revision]/[artifact].[ext]")),
     "airbyte"                 at "https://airbyte.mycloudrepo.io/public/repositories/airbyte-public-jars",
     "central-maven"           at "https://central.maven.org/maven2/",
     "exasol"                  at "https://maven.exasol.com/artifactory/exasol-releases/",
