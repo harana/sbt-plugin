@@ -39,11 +39,6 @@ jobs:
           ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
           ln -s /opt/cache/sbt_boot ~/.sbt/boot
 
-      - name: Setup Java and Scala
-        uses: olafurpg/setup-scala@v13
-        with:
-          java-version: ${{ matrix.java }}
-
       - name: Publish Packages
         env:
           GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES_TOKEN }}
