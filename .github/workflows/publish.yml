@@ -1,7 +1,6 @@
-name: Publish
+name: Publish Library
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - "v*"
@@ -12,11 +11,10 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        scala: [2.12.15]
+        scala: [2.13.12]
         java: [zulu@1.17]
     runs-on: harana-dev-linux
     steps:
-
       - name: Cleanup Ref
         id: ref
         uses: frabert/replace-string-action@v1.2
@@ -41,9 +39,24 @@ jobs:
           ln -s /opt/cache/coursier_cache ~/.cache/coursier
           ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
           ln -s /opt/cache/sbt_cache ~/.sbt/boot
-          ls -alL ~/
-          ls -alL ~/.sbt
 
+      - name: Populate Credentials
+        run: |
+          mkdir -p ~/.sbt/1.0/plugins
+
+          if ! [ -f ~/.sbt/1.0/plugins/credentials.sbt ]; then
+            cat <<EOF > ~/.sbt/1.0/plugins/credentials.sbt
+            credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", "nadenf", System.getenv("GITHUB_TOKEN"))
+            EOF
+          fi
+
+      - name: Install JS Dependencies
+        run: |
+          if [ -d 'js' ]; then
+            cd js
+            pnpm install
+            cd ..
+          fi
 
       - name: Publish Packages
         env:
@@ -63,10 +76,8 @@ jobs:
           keep: 2
           version-pattern: ".+?SNAPSHOT"
           names: |
-            com.harana.sbt.common_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.js_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.jvm_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.js_jvm_${{ steps.scala.outputs.group1 }}_1.0
+            com.harana.${{ github.event.repository.name }}_${{ steps.scala.outputs.group1 }}
+            com.harana.${{ github.event.repository.name }}JS_${{ steps.scala.outputs.group1 }}
 
       - name: Remove Older Releases
         uses: smartsquaregmbh/delete-old-packages@v0.2.0
@@ -74,17 +85,20 @@ jobs:
           keep: 2
           version-pattern: .*[^SNAPSHOT]$
           names: |
-            com.harana.sbt.common_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.js_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.jvm_${{ steps.scala.outputs.group1 }}_1.0
-            com.harana.sbt.js_jvm_${{ steps.scala.outputs.group1 }}_1.0
+            com.harana.${{ github.event.repository.name }}_${{ steps.scala.outputs.group1 }}
+            com.harana.${{ github.event.repository.name }}JS_${{ steps.scala.outputs.group1 }}
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -fr ~/.sbt/1.0/plugins/credentials.sbt
 
       - name: Notify Slack - Success
         if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_FOOTER: ""
-          SLACK_MESSAGE: "✅  sbt-plugin  |  publish  |  ${{ steps.ref.outputs.replaced }}"
+          SLACK_MESSAGE: "✅  ${{ github.event.repository.name }}  |  publish  |  ${{ steps.ref.outputs.replaced }}"
           SLACK_WEBHOOK: ${{ secrets.SLACK_BUILDS_WEBHOOK }}
 
       - name: Notify Slack - Failure
@@ -92,5 +106,5 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_FOOTER: ""
-          SLACK_MESSAGE: "⛔️  sbt-plugin  |  publish  |  ${{ steps.ref.outputs.replaced }}"
+          SLACK_MESSAGE: "⛔️  ${{ github.event.repository.name }}  |  publish  |  ${{ steps.ref.outputs.replaced }}"
           SLACK_WEBHOOK: ${{ secrets.SLACK_BUILDS_WEBHOOK }}
