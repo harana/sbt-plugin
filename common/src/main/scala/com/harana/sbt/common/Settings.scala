@@ -50,70 +50,74 @@ object Settings {
   )
 
   val js = Seq(
-		scalaJSUseMainModuleInitializer           := false,
-    Global / onChangedBuildSource             := ReloadOnSourceChanges,
-    scalaJSLinkerConfig                       ~= (_.withModuleKind(ModuleKind.ESModule)),
-    unmanagedBase                             := (ThisProject / unmanagedBase).value,
-    externalNpm                               := {
-                                                  sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
-                                                  baseDirectory.value
-                                                 },
-    stIgnore ++= List(
-      "@headlessui/react",
-      "@heroicons/react",
-      "@lit/reactive-element",
-      "@mapbox/togeojson",
-      "@niivue/niivue",
-      "@shoelace-style/shoelace",
-      "@tailwindcss/aspect-ratio",
-      "@tailwindcss/forms",
-      "@tailwindcss/typography",
-      "@xeokit/xeokit-sdk",
-      "history",
-      "katex",
-      "keen-slider",
-      "leaflet",
-      "meshgrad",
-      "notebookjs",
-      "prismjs",
-      "react-json-lens",
-      "react-leaflet-kml",
-      "react-proxy",
-      "react-virtuoso",
-      "styled-components",
-      "tailwindcss",
-      "tauri-plugin-log-api",
-      "type-fest",
-      "vite",
-      "xlsx-viewer"
-    ),
-    stFlavour := Flavour.Slinky,
-    stIncludeDev := true,
-    stMinimize := Selection.AllExcept("@tauri-apps/api"),
-    stOutputPackage := "com.harana.js",
-    stQuiet := true,
-    Compile / packageSrc / mappings ++= {
-      val base = (Compile / sourceManaged).value
-      val files = (Compile / managedSources).value
-      files.map { f => (f, f.relativeTo(base).get.getPath) }
-    },
-    frontendReport := {
-      if (isRelease) (Compile / fullLinkJS).value.data -> (Compile / fullLinkJS / scalaJSLinkerOutputDirectory).value
-      else (Compile / fastLinkJS).value.data -> (Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
-    },
-    buildCss := {
-      s"pnpm run --dir ${baseDirectory.value.toString} css" !
-    },
-    buildFrontend := {
-      val (report, fm) = frontendReport.value
-      IO.listFiles(fm).toList.map { file =>
-        val (name, ext) = file.baseAndExt
-        val out = baseDirectory.value / "target" / (name + "." + ext)
-        IO.copyFile(file, out)
-        file.name -> out
-      }.toMap
-    },
- )
+		scalaJSUseMainModuleInitializer               := false,
+    Global / onChangedBuildSource                 := ReloadOnSourceChanges,
+    scalaJSLinkerConfig                           ~= (_.withModuleKind(ModuleKind.ESModule)),
+    unmanagedBase                                 := (ThisProject / unmanagedBase).value,
+    externalNpm                                   := {
+                                                        sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
+                                                        baseDirectory.value
+                                                      },
+    stIgnore                                      ++= List(
+                                                        "@headlessui/react",
+                                                        "@heroicons/react",
+                                                        "@lit/reactive-element",
+                                                        "@mapbox/togeojson",
+                                                        "@niivue/niivue",
+                                                        "@shoelace-style/shoelace",
+                                                        "@tailwindcss/aspect-ratio",
+                                                        "@tailwindcss/forms",
+                                                        "@tailwindcss/typography",
+                                                        "@xeokit/xeokit-sdk",
+                                                        "chakra-ui/react-types",
+                                                        "csstype",
+                                                        "framer-motion",
+                                                        "history",
+                                                        "katex",
+                                                        "keen-slider",
+                                                        "leaflet",
+                                                        "meshgrad",
+                                                        "notebookjs",
+                                                        "prismjs",
+                                                        "react-icons",
+                                                        "react-json-lens",
+                                                        "react-leaflet-kml",
+                                                        "react-proxy",
+                                                        "react-virtuoso",
+                                                        "styled-components",
+                                                        "tailwindcss",
+                                                        "tauri-plugin-log-api",
+                                                        "type-fest",
+                                                        "vite",
+                                                        "xlsx-viewer"
+                                                      ),
+    stFlavour                                     := Flavour.Slinky,
+    stIncludeDev                                  := true,
+    stMinimize                                    := Selection.AllExcept("@tauri-apps/api"),
+    stOutputPackage                               := "com.harana.js",
+    Global / stQuiet                              := true,
+    Compile / packageSrc / mappings               ++= {
+                                                    val base = (Compile / sourceManaged).value
+                                                    val files = (Compile / managedSources).value
+                                                    files.map { f => (f, f.relativeTo(base).get.getPath) }
+                                                  },
+    frontendReport                                := {
+                                                    if (isRelease) (Compile / fullLinkJS).value.data -> (Compile / fullLinkJS / scalaJSLinkerOutputDirectory).value
+                                                    else (Compile / fastLinkJS).value.data -> (Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
+                                                  },
+    buildCss                                      := {
+                                                    s"pnpm run --dir ${baseDirectory.value.toString} css" !
+                                                  },
+    buildFrontend                                 := {
+                                                    val (report, fm) = frontendReport.value
+                                                    IO.listFiles(fm).toList.map { file =>
+                                                      val (name, ext) = file.baseAndExt
+                                                      val out = baseDirectory.value / "target" / (name + "." + ext)
+                                                      IO.copyFile(file, out)
+                                                      file.name -> out
+                                                    }.toMap
+                                                  },
+                                                )
 
   val javaLaunchOptions                        = if (javaVersion > 9) Seq(
                                                       "--add-modules=jdk.incubator.foreign",
