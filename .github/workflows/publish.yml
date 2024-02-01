@@ -35,9 +35,9 @@ jobs:
           mkdir -p /opt/cache/coursier_cache
           mkdir -p /opt/cache/ivy2_cache
           mkdir -p /opt/cache/sbt_cache
-          rm -fr .cache ; mkdir .cache
-          rm -fr .ivy2 ; mkdir .ivy2
-          rm -fr .sbt ; mkdir .sbt
+          rm -fr ~/..cache ; mkdir ~/.cache
+          rm -fr ~/..ivy2 ; mkdir ~/.ivy2
+          rm -fr ~/..sbt ; mkdir ~/.sbt
           ln -s /opt/cache/coursier_cache ~/.cache/coursier
           ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
           ln -s /opt/cache/sbt_boot ~/.sbt/boot
