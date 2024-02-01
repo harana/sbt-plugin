@@ -52,7 +52,7 @@ jobs:
 
       - name: Install JS Dependencies
         run: |
-          if [ -d 'js' ]; then
+          if [ -f 'js/package.json' ]; then
             cd js
             pnpm install
             cd ..
