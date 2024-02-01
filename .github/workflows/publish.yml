@@ -33,19 +33,19 @@ jobs:
           mkdir -p /opt/cache/coursier_cache
           mkdir -p /opt/cache/ivy2_cache
           mkdir -p /opt/cache/sbt_cache
-          rm -fr ~/.cache ; mkdir ~/.cache
-          rm -fr ~/.ivy2 ; mkdir ~/.ivy2
-          rm -fr ~/.sbt ; mkdir ~/.sbt
-          ln -s /opt/cache/coursier_cache ~/.cache/coursier
-          ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
-          ln -s /opt/cache/sbt_cache ~/.sbt/boot
+          rm -fr /home/runner/.cache ; mkdir /home/runner/.cache
+          rm -fr /home/runner/.ivy2 ; mkdir /home/runner/.ivy2
+          rm -fr /home/runner/.sbt ; mkdir /home/runner/.sbt
+          ln -s /opt/cache/coursier_cache /home/runner/.cache/coursier
+          ln -s /opt/cache/ivy2_cache /home/runner/.ivy2/cache
+          ln -s /opt/cache/sbt_cache /home/runner/.sbt/boot
 
       - name: Populate Credentials
         run: |
-          mkdir -p ~/.sbt/1.0/plugins
+          mkdir -p /home/runner/.sbt/1.0/plugins
 
-          if ! [ -f ~/.sbt/1.0/plugins/credentials.sbt ]; then
-            cat <<EOF > ~/.sbt/1.0/plugins/credentials.sbt
+          if [ ! -f '/home/runner/.sbt/1.0/plugins/credentials.sbt' ]; then
+            cat <<EOF > /home/runner/.sbt/1.0/plugins/credentials.sbt
             credentials += Credentials("GitHub Package Registry", "maven.pkg.github.com", "nadenf", System.getenv("GITHUB_TOKEN"))
             EOF
           fi
@@ -91,7 +91,7 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          rm -fr ~/.sbt/1.0/plugins/credentials.sbt
+          rm -fr /home/runner/.sbt/1.0/plugins/credentials.sbt
 
       - name: Notify Slack - Success
         if: success()
