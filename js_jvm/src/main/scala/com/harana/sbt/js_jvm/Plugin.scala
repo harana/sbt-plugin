@@ -1,5 +1,6 @@
 package com.harana.sbt.js_jvm
 
+import com.harana.sbt.common.versioning.versioning._
 import java.nio.charset.Charset
 import java.nio.file._
 import com.harana.sbt.common._
@@ -38,8 +39,8 @@ object Plugin extends AutoPlugin {
     def haranaCrossProject(id: String): CrossProject =
       CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
         .crossType(CrossType.Full)
-        .jsConfigure(_.enablePlugins(ScalablyTypedConverterExternalNpmPlugin))
-        .jvmConfigure(_.enablePlugins(JavaAppPackaging, UniversalPlugin))
+        .jsConfigure(_.enablePlugins(GitVersioningPlugin, ScalablyTypedConverterExternalNpmPlugin))
+        .jvmConfigure(_.enablePlugins(GitVersioningPlugin, JavaAppPackaging, UniversalPlugin))
         .settings(
           organization := "com.harana",
           name := id,

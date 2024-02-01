@@ -1,5 +1,6 @@
 
 lazy val commonSettings = Seq(
+    version                                   := "0.0.0",
     sbtPlugin                                 := true,
     scalaVersion                              := "2.12.18",
     organization                              := "com.harana",
@@ -8,8 +9,7 @@ lazy val commonSettings = Seq(
     githubTokenSource                         := TokenSource.Environment("GITHUB_TOKEN"),
     doc / sources                             := Seq(),
     Compile / packageDoc / publishArtifact    := false,
-    Compile / packageSrc / publishArtifact    := false,
-    resolvers                                 += Resolver.url("hoya", url("https://maven.pkg.github.com/hiyainc-oss/sbt-plugin"))(Patterns("[organisation]/[module]/[revision]/[artifact].[ext]") )
+    Compile / packageSrc / publishArtifact    := false
 )
 
   lazy val root = Project("sbt-plugin", file("."))
