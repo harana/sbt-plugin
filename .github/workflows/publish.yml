@@ -15,6 +15,10 @@ jobs:
         java: [zulu@1.17]
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Sleep
+        run: |
+          sleep 10000
+
       - name: Cleanup Ref
         id: ref
         uses: frabert/replace-string-action@v1.2
