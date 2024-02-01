@@ -16,9 +16,6 @@ jobs:
         java: [zulu@1.17]
     runs-on: harana-dev-linux
     steps:
-      - name: Sleep
-        run: |
-          sleep 10000
 
       - name: Cleanup Ref
         id: ref
@@ -33,26 +30,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Cache
+        run: |
+          mkdir ~/.cache
+          mkdir ~/.ivy2
+          mkdir ~/.sbt
+          ln -s /opt/cache/coursier_cache ~/.cache/coursier
+          ln -s /opt/cache/ivy2_cache ~/.ivy2/cache
+          ln -s /opt/cache/sbt_boot ~/.sbt/boot
+
       - name: Setup Java and Scala
         uses: olafurpg/setup-scala@v13
         with:
           java-version: ${{ matrix.java }}
-
-      - name: Cache SBT
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.sbt
-            ~/.ivy2/cache
-            ~/.coursier/cache/v1
-            ~/.cache/coursier/v1
-            ~/AppData/Local/Coursier/Cache/v1
-            ~/Library/Caches/Coursier/v1
-          key: ${{ runner.os }}-sbt-cache-v2-${{ hashFiles('**/*.sbt') }}-${{ hashFiles('project/build.properties') }}
-
-      - name: Remove Cached Harana Artefacts
-        run: |
-          rm -fr ~/.cache/coursier/v1/https/maven.pkg.github.com
 
       - name: Publish Packages
         env:
