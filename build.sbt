@@ -39,7 +39,7 @@ lazy val commonSettings = Seq(
       addSbtPlugin("net.aichler"                    % "sbt-jupiter-interface"     % "0.11.1"),
       addSbtPlugin("nl.gn0s1s"                      % "sbt-dotenv"                % "3.0.0"),
       addSbtPlugin("org.portable-scala"             % "sbt-scalajs-crossproject"  % "1.3.0"),
-      addSbtPlugin("org.scala-js"                   % "sbt-scalajs"               % "1.14.0"),
+      addSbtPlugin("org.scala-js"                   % "sbt-scalajs"               % "1.15.0"),
       addSbtPlugin("org.scalablytyped.converter"    % "sbt-converter"             % "1.0.0-beta44"),
       addSbtPlugin("org.scalameta"                  % "sbt-scalafmt"              % "2.4.6"),
       addDependencyTreePlugin
