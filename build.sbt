@@ -41,7 +41,7 @@ lazy val commonSettings = Seq(
       addSbtPlugin("org.portable-scala"             % "sbt-scalajs-crossproject"  % "1.3.0"),
       addSbtPlugin("org.scala-js"                   % "sbt-scalajs"               % "1.14.0"),
       addSbtPlugin("org.scalablytyped.converter"    % "sbt-converter"             % "1.0.0-beta44"),
-      addSbtPlugin("org.scalameta"                  % "sbt-scalafmt"              % "2.4.6"),
+      addSbtPlugin("org.scalameta"                  % "sbt-scalafmt"              % "2.5.2"),
       addDependencyTreePlugin
     )
     .enablePlugins(SbtPlugin)
