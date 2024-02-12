@@ -2,7 +2,7 @@
 lazy val commonSettings = Seq(
     version                                   := "0.0.0",
     sbtPlugin                                 := true,
-    scalaVersion                              := "2.13.12",
+    scalaVersion                              := "2.12.18",
     organization                              := "com.harana",
     githubOwner                               := "harana",
     githubRepository                          := "sbt-plugin",
@@ -30,6 +30,7 @@ lazy val commonSettings = Seq(
 
       addSbtPlugin("ch.epfl.scala"                  % "sbt-scalafix"              % "0.11.1"),
       addSbtPlugin("com.codecommit"                 % "sbt-github-packages"       % "0.5.3"),
+      addSbtPlugin("com.eed3si9n"                   % "sbt-assembly"              % "2.1.5"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-buildinfo"             % "0.11.0"),
       addSbtPlugin("com.github.sbt"                 % "sbt-jni"                   % "1.7.0"),
       addSbtPlugin("com.github.sbt"                 % "sbt-ci-release"            % "1.5.12"),
