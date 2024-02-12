@@ -1,5 +1,6 @@
 package com.harana.sbt.jvm
 
+import com.harana.sbt.common.versioning.versioning._
 import com.harana.sbt.common._
 import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.universal.UniversalPlugin
@@ -14,7 +15,7 @@ object Plugin extends AutoPlugin {
   object autoImport {
     def haranaProject(id: String): Project =
       Project(id = id, file(id))
-        .enablePlugins(JavaAppPackaging, UniversalPlugin)
+        .enablePlugins(GitVersioningPlugin, JavaAppPackaging, UniversalPlugin)
         .settings(
           organization := "com.harana",
           name := id,
