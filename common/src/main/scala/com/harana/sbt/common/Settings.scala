@@ -17,23 +17,35 @@ import org.scalajs.linker.interface.Report
 object Settings {
 
   lazy val buildFrontend = taskKey[Unit]("")
-  lazy val buildJs = taskKey[Map[String, File]]("")
   lazy val buildCss = taskKey[Unit]("")
   lazy val frontendReport = taskKey[(Report, File)]("")
   lazy val isRelease = sys.env.get("RELEASE").contains("true")
 
   def common = Seq(
     scalaVersion                              := "2.13.12",
-    scalacOptions                             ++= Seq(
-                                                      "-deprecation", "-feature", "-unchecked", "-language:higherKinds", "-language:implicitConversions",
-                                                      "-language:postfixOps", "-Yrangepos", "-Ybackend-parallelism", "8", "-Ybackend-worker-queue", "8",
-                                                      "-language:experimental.macros", "-Ymacro-annotations"
-                                                    ),
+    scalacOptions                             := Seq(
+                                                    "-deprecation",
+                                                    "-feature",
+                                                    "-unchecked",
+                                                    "-language:experimental.macros",
+                                                    "-language:higherKinds",
+                                                    "-language:implicitConversions",
+                                                    "-language:postfixOps",
+                                                    "-Xmaxerrs", "10000",
+                                                    "-Ymacro-annotations",
+                                                    "-Yrangepos",
+                                                    "-Ybackend-parallelism", "16",
+                                                    "-Ybackend-worker-queue", "1000",
+                                                    "-Xlog-implicits"
+                                                  ),
     doc / sources                                 := Seq(),
     packageDoc / publishArtifact                  := false,
     publishArtifact in (Compile, packageDoc)      := false,
     packageSrc / publishArtifact                  := false,
     publishArtifact in (Compile, packageSrc)      := false,
+    maxErrors                                     := 1000,
+    fork                                          := true,
+    Global / cancelable                           := true,
 
     githubOwner                                   := "harana",
     organization                                  := "com.harana",
@@ -50,10 +62,11 @@ object Settings {
   )
 
   val js = Seq(
-		scalaJSUseMainModuleInitializer               := false,
+		scalaJSUseMainModuleInitializer               := true,
     Global / onChangedBuildSource                 := ReloadOnSourceChanges,
     scalaJSLinkerConfig                           ~= (_.withModuleKind(ModuleKind.ESModule)),
     unmanagedBase                                 := (ThisProject / unmanagedBase).value,
+    libraryDependencySchemes                      ++= Library.jsLibraryDependencySchemes.value,
     externalNpm                                   := {
                                                         sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
                                                         baseDirectory.value
