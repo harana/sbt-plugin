@@ -1,10 +1,10 @@
 package com.harana.sbt.common
 
-import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
-import sbt.Keys.scalaVersion
-import sbt._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport.*
+import sbt.Keys.{resolvers, scalaVersion}
+import sbt.*
 import scalajsbundler.util.JSON
-import sbtghpackages.GitHubPackagesPlugin.autoImport._
+import sbtghpackages.GitHubPackagesPlugin.autoImport.*
 
 import scala.language.postfixOps
 
@@ -22,29 +22,29 @@ object Library {
   val jsOverrides = Def.setting(Seq())
   val jvm = Def.setting(Seq())
 
-  val additionalNpmConfig = Def.setting(Map(
-    "overrides" -> JSON.obj(
-      "oas-xterm-for-react18" -> JSON.obj(
-        "react" -> JSON.str("18.2.0")
-      ),
-      "react-device-detect" -> JSON.obj(
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0"),
-      ),
-      "mini-create-react-context" -> JSON.obj(
-        "react" -> JSON.str("18.2.0")
-      ),
-      "react-lazylog-x" -> JSON.obj(
-        "react-virtualized" -> JSON.str("9.22.5"),
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0")
-      ),
-      "react-virtualized" -> JSON.obj(
-        "react" -> JSON.str("18.2.0"),
-        "react-dom" -> JSON.str("18.2.0"),
-      ),
-    )
-  ))
+//  val additionalNpmConfig = Def.setting(Map(
+//    "overrides" -> JSON.obj(
+//      "oas-xterm-for-react18" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0")
+//      ),
+//      "react-device-detect" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0"),
+//      ),
+//      "mini-create-react-context" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0")
+//      ),
+//      "react-lazylog-x" -> JSON.obj(
+//        "react-virtualized" -> JSON.str("9.22.5"),
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0")
+//      ),
+//      "react-virtualized" -> JSON.obj(
+//        "react" -> JSON.str("18.2.0"),
+//        "react-dom" -> JSON.str("18.2.0"),
+//      ),
+//    )
+//  ))
 
   val globalDependencyOverrides = Def.setting(Seq(
     "org.apache.curator"      %   "curator-recipes"     % "5.4.0",
@@ -210,70 +210,70 @@ object Library {
     "source-map"                            -> "0.7.3"
   ))
 
-  val npmDependencies = Def.setting(Seq(
-    "@cantoo/html2canvas"                   -> "1.5.7",
-    "@google/model-viewer"                  -> "3.3.0",
-    "@headlessui/react"                     -> "1.7.17",
-    "@heroicons/react"                      -> "2.1.1",
-    "@mapbox/togeojson"                     -> "0.16.2",
-    "@niivue/niivue"                        -> "0.38.0",
-    "@nivo/bar"                             -> "0.83.0",
-    "@nivo/calendar"                        -> "0.83.0",
-    "@nivo/core"                            -> "0.83.0",
-    "@nivo/waffle"                          -> "0.83.0",
-    "@peculiar/certificates-viewer-react"   -> "3.10.1",
-    "@react-three/fiber"                    -> "8.15.3",
-    "@shoelace-style/shoelace"              -> "2.9.0",
-    "@tauri-apps/api"                       -> "^1.5.0",
-    "@vertx/eventbus-bridge-client.js"      -> "1.0.0-3-SNAPSHOT",
-    "@visx/gradient"                        -> "3.0.0",
-    "@visx/shape"                           -> "3.2.0",
-    "@xeokit/xeokit-sdk"                    -> "2.4.0-alpha-80",
-    "closest"                               -> "0.0.1",
-    "docx-preview"                          -> "0.1.20",
-    "dxf-viewer"                            -> "1.0.29",
-    "filepond"                              -> "4.30.4",
-    "highlight.js"                          -> "11.9.0",
-    "history"                               -> "5.3.0",
-    "howler"                                -> "2.2.4",
-    "keen-slider"                           -> "6.8.6",
-    "leaflet"                               -> "1.9.4",
-    "notebookjs"                            -> "0.6.7",
-    "oas-xterm-for-react18"                 -> "1.1.0",
-    "peaks.js"                              -> "3.1.0",
-    "prismjs"                               -> "1.29.0",
-    "prop-types"                            -> "15.8.1",
-    "react"                                 -> "18.2.0",
-    "react-color"                           -> "2.19.3",
-    "react-copy-to-clipboard"               -> "5.1.0",
-    "react-dom"                             -> "18.2.0",
-    "react-filepond"                        -> "7.1.2",
-    "react-helmet"                          -> "6.1.0",
-    "react-intl"                            -> "6.4.4",
-    "react-ipynb-renderer"                  -> "2.1.2",
-    "react-json-lens"                       -> "1.0.1",
-    "react-latex-next"                      -> "2.2.0",
-    "react-lazylog-x"                       -> "4.5.6",
-    "react-leaflet"                         -> "4.2.1",
-    "react-leaflet-kml"                     -> "2.1.1",
-    "react-markdown"                        -> "8.0.7",
-    "react-markdown"                        -> "9.0.0",
-    "react-pdf"                             -> "7.5.1",
-    "react-proxy"                           -> "1.1.8",
-    "react-router"                          -> "5.3.4",
-    "react-router-cache-route"              -> "1.12.11",
-    "react-router-dom"                      -> "5.3.4",
-    "react-terminal"                        -> "1.3.1",
-    "react-terminal-ui"                     -> "1.0.5",
-    "react-virtuoso"                        -> "4.6.0",
-    "reactflow"                             -> "11.7.4",
-    "seqviz"                                -> "3.9.2",
-    "sockjs-client"                         -> "1.6.1",
-    "source-map"                            -> "0.7.3",
-    "throttle-debounce"                     -> "5.0.0",
-    "xlsx-viewer"                           -> "1.1.5",
-    "xterm-addon-fit"                       -> "0.7.0",
-  ))
+  // val npmDependencies = Def.setting(Seq(
+  //   "@cantoo/html2canvas"                   -> "1.5.7",
+  //   "@google/model-viewer"                  -> "3.3.0",
+  //   "@headlessui/react"                     -> "1.7.17",
+  //   "@heroicons/react"                      -> "2.1.1",
+  //   "@mapbox/togeojson"                     -> "0.16.2",
+  //   "@niivue/niivue"                        -> "0.38.0",
+  //   "@nivo/bar"                             -> "0.83.0",
+  //   "@nivo/calendar"                        -> "0.83.0",
+  //   "@nivo/core"                            -> "0.83.0",
+  //   "@nivo/waffle"                          -> "0.83.0",
+  //   "@peculiar/certificates-viewer-react"   -> "3.10.1",
+  //   "@react-three/fiber"                    -> "8.15.3",
+  //   "@shoelace-style/shoelace"              -> "2.9.0",
+  //   "@tauri-apps/api"                       -> "^1.5.0",
+  //   "@vertx/eventbus-bridge-client.js"      -> "1.0.0-3-SNAPSHOT",
+  //   "@visx/gradient"                        -> "3.0.0",
+  //   "@visx/shape"                           -> "3.2.0",
+  //   "@xeokit/xeokit-sdk"                    -> "2.4.0-alpha-80",
+  //   "closest"                               -> "0.0.1",
+  //   "docx-preview"                          -> "0.1.20",
+  //   "dxf-viewer"                            -> "1.0.29",
+  //   "filepond"                              -> "4.30.4",
+  //   "highlight.js"                          -> "11.9.0",
+  //   "history"                               -> "5.3.0",
+  //   "howler"                                -> "2.2.4",
+  //   "keen-slider"                           -> "6.8.6",
+  //   "leaflet"                               -> "1.9.4",
+  //   "notebookjs"                            -> "0.6.7",
+  //   "oas-xterm-for-react18"                 -> "1.1.0",
+  //   "peaks.js"                              -> "3.1.0",
+  //   "prismjs"                               -> "1.29.0",
+  //   "prop-types"                            -> "15.8.1",
+  //   "react"                                 -> "18.2.0",
+  //   "react-color"                           -> "2.19.3",
+  //   "react-copy-to-clipboard"               -> "5.1.0",
+  //   "react-dom"                             -> "18.2.0",
+  //   "react-filepond"                        -> "7.1.2",
+  //   "react-helmet"                          -> "6.1.0",
+  //   "react-intl"                            -> "6.4.4",
+  //   "react-ipynb-renderer"                  -> "2.1.2",
+  //   "react-json-lens"                       -> "1.0.1",
+  //   "react-latex-next"                      -> "2.2.0",
+  //   "react-lazylog-x"                       -> "4.5.6",
+  //   "react-leaflet"                         -> "4.2.1",
+  //   "react-leaflet-kml"                     -> "2.1.1",
+  //   "react-markdown"                        -> "8.0.7",
+  //   "react-markdown"                        -> "9.0.0",
+  //   "react-pdf"                             -> "7.5.1",
+  //   "react-proxy"                           -> "1.1.8",
+  //   "react-router"                          -> "5.3.4",
+  //   "react-router-cache-route"              -> "1.12.11",
+  //   "react-router-dom"                      -> "5.3.4",
+  //   "react-terminal"                        -> "1.3.1",
+  //   "react-terminal-ui"                     -> "1.0.5",
+  //   "react-virtuoso"                        -> "4.6.0",
+  //   "reactflow"                             -> "11.7.4",
+  //   "seqviz"                                -> "3.9.2",
+  //   "sockjs-client"                         -> "1.6.1",
+  //   "source-map"                            -> "0.7.3",
+  //   "throttle-debounce"                     -> "5.0.0",
+  //   "xlsx-viewer"                           -> "1.1.5",
+  //   "xterm-addon-fit"                       -> "0.7.0",
+  // ))
 
   val okhttp = Def.setting(Seq(
     "com.squareup.okhttp3" % "logging-interceptor" % "4.10.0",
@@ -538,20 +538,16 @@ object Library {
     Resolver.sonatypeOssRepos("releases").head,
     Resolver.sonatypeOssRepos("snapshots").head,
     Resolver.url("heroku-sbt-plugin-releases", url("https://dl.bintray.com/heroku/sbt-plugins/"))(Resolver.ivyStylePatterns),
-    "typesafe.com" at "https://repo.typesafe.com/typesafe/repo/",
-    "sonatype.org" at "https://oss.sonatype.org/content/repositories/releases",
-    "spray.io"     at "https://repo.spray.io",
-    "newmotion public repo".at("https://nexus.newmotion.com/content/groups/public/"),
-    "central.maven.org" at "https://central.maven.org/maven2/",
-    "jitpack" at "https://jitpack.io",
-    "shibboleth" at "https://build.shibboleth.net/nexus/content/repositories/releases/",
-    "typesafe" at "https://repo.typesafe.com/typesafe/releases/",
-    "spark-packages" at "https://dl.bintray.com/spark-packages/maven",
-    "orientdb" at "https://dl.bintray.com/sbcd90/org.apache.spark",
-    "mulesoft" at "https://repository.mulesoft.org/nexus/content/repositories/public/",
-    "ossrh" at "https://oss.sonatype.org/service/local/staging/deploy/maven2",
-    "exasol" at "https://maven.exasol.com/artifactory/exasol-releases/",
-    "airbyte" at "https://airbyte.mycloudrepo.io/public/repositories/airbyte-public-jars"
+    "airbyte"                 at "https://airbyte.mycloudrepo.io/public/repositories/airbyte-public-jars",
+    "jitpack"                 at "https://jitpack.io",
+    "mulesoft"                at "https://repository.mulesoft.org/nexus/content/repositories/public/",
+    "orientdb"                at "https://dl.bintray.com/sbcd90/org.apache.spark",
+    "ossrh"                   at "https://oss.sonatype.org/service/local/staging/deploy/maven2",
+    "shibboleth"              at "https://build.shibboleth.net/nexus/content/repositories/releases/",
+    "sonatype"                at "https://oss.sonatype.org/content/repositories/releases",
+    "spark-packages"          at "https://dl.bintray.com/spark-packages/maven",
+    "typesafe"                at "https://repo.typesafe.com/typesafe/releases/",
+    "typesafe.com"            at "https://repo.typesafe.com/typesafe/repo/"
   )
 }
 

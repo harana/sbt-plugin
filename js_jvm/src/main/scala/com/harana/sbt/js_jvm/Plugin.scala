@@ -1,5 +1,6 @@
 package com.harana.sbt.js_jvm
 
+import com.harana.sbt.common.versioning.versioning._
 import java.nio.charset.Charset
 import java.nio.file._
 import com.harana.sbt.common._
@@ -7,7 +8,6 @@ import com.typesafe.sbt.packager.archetypes.JavaAppPackaging
 import com.typesafe.sbt.packager.universal.UniversalPlugin
 import sbt.Keys._
 import sbt.{Def, _}
-import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.scalaJSUseMainModuleInitializer
 import sbtcrossproject.CrossPlugin.autoImport._
 import sbtcrossproject.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
@@ -39,8 +39,8 @@ object Plugin extends AutoPlugin {
     def haranaCrossProject(id: String): CrossProject =
       CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
         .crossType(CrossType.Full)
-        .jsConfigure(_.enablePlugins(ScalablyTypedConverterExternalNpmPlugin))
-        .jvmConfigure(_.enablePlugins(JavaAppPackaging, UniversalPlugin))
+        .jsConfigure(_.enablePlugins(GitVersioningPlugin, ScalablyTypedConverterExternalNpmPlugin))
+        .jvmConfigure(_.enablePlugins(GitVersioningPlugin, JavaAppPackaging, UniversalPlugin))
         .settings(
           organization := "com.harana",
           name := id,
@@ -56,7 +56,6 @@ object Plugin extends AutoPlugin {
           dependencyOverrides ++= Library.globalDependencyOverrides.value,
           libraryDependencySchemes ++= Library.jsLibraryDependencySchemes.value,
           libraryDependencies ++=  Library.js.value,
-          scalaJSUseMainModuleInitializer := false,
           Settings.common,
           Settings.js,
           unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
@@ -72,19 +71,5 @@ object Plugin extends AutoPlugin {
           Settings.jvm,
           unmanagedBase := (ThisBuild / baseDirectory).value / "lib"
         )
-
-    def compileJS(baseDirectory: SettingKey[File]) = {
-      baseDirectory.map { base =>
-
-        val nodeModules = new File(base, "target/scala-2.12/scalajs-bundler/main/node_modules").list().toList
-        if (!nodeModules.contains("webpack-merge"))
-          s"yarn add ml-matrix @nivo/waffle webpack-merge ${base.absolutePath}/target/scala-2.12/scalajs-bundler/main/node_modules" !
-
-        new File(base, "target/scala-2.12/scalajs-bundler/main").listFiles((dir, name) => name.toLowerCase.contains("opt"))
-          .foreach(
-            file => Files.copy(file.toPath, new File(base, s"../jvm/src/main/resources/public/js/${file.getName}").toPath, StandardCopyOption.REPLACE_EXISTING)
-          )
-      }
-    }
   }
 }
