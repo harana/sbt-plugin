@@ -55,7 +55,9 @@ jobs:
           fi
 
       - name: Publish Packages
-        run: sbt publish
+        run: |
+          rm -fr $COURSIER_HOME/cache/https/maven.pkg.github.com/harana/sbt-plugin
+          sbt publish
         env:
           GITHUB_TOKEN: ${{ secrets.WRITE_PACKAGES_TOKEN }}
 
