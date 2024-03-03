@@ -2,7 +2,7 @@
 lazy val commonSettings = Seq(
     version                                   := "0.0.0",
     sbtPlugin                                 := true,
-    scalaVersion                              := "2.12.18",
+    scalaVersion                              := "2.12.19",
     organization                              := "com.harana",
     githubOwner                               := "harana",
     githubRepository                          := "sbt-plugin",
