@@ -47,14 +47,16 @@ object Library {
 //  ))
 
   val globalDependencyOverrides = Def.setting(Seq(
-    "org.apache.curator"      %   "curator-recipes"     % "5.4.0",
-    "org.json4s"              %%  "json4s-core"         % "3.7.0-M11",
-    "org.json4s"              %%  "json4s-native"       % "3.7.0-M11",
-    "org.json4s"              %%  "json4s-jackson"      % "3.7.0-M11",
-    "org.json4s"              %%  "json4s-ext"          % "3.7.0-M11",
-    "org.slf4j"               %   "slf4j-api"           % "1.7.36",
-    "io.spray"                %%% "spray-json"          % "1.4.0",
-    "org.codehaus.janino"     %   "janino"              % "3.1.9"
+    "io.circe"                %%  "circe-core"                  % "0.14.6",
+    "org.apache.curator"      %   "curator-recipes"             % "5.4.0",
+    "org.json4s"              %%  "json4s-core"                 % "3.7.0-M11",
+    "org.json4s"              %%  "json4s-native"               % "3.7.0-M11",
+    "org.json4s"              %%  "json4s-jackson"              % "3.7.0-M11",
+    "org.json4s"              %%  "json4s-ext"                  % "3.7.0-M11",
+    "org.scala-lang.modules"  %%  "scala-parser-combinators"    % "2.1.1",
+    "org.slf4j"               %   "slf4j-api"                   % "1.7.36",
+    "io.spray"                %%% "spray-json"                  % "1.4.0",
+    "org.codehaus.janino"     %   "janino"                      % "3.1.9"
   ))
 
   val jvmLibraryDependencySchemes = Def.setting(Seq(
