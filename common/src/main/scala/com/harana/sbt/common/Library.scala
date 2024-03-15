@@ -503,7 +503,7 @@ object Library {
   val sprayJson = Def.setting("io.spray" %%% "spray-json" % "1.4.0")
   val squants = Def.setting("org.typelevel"  %%% "squants" % "1.8.3")
   val sshj = Def.setting("com.hierynomus" % "sshj" % "0.35.0")
-  val stripe = Def.setting("com.stripe" % "stripe-java" % "22.13.0")
+  val stripe = Def.setting("com.stripe" % "stripe-java" % "24.19.0")
   val sttpQuicklens = Def.setting("com.softwaremill.quicklens" %%% "quicklens" % "1.6.0")
   val sundial = Def.setting("org.knowm" % "sundial" % "2.2.2")
   val svmSubs = Def.setting("org.scalameta" %% "svm-subs" % "20.2.0")
