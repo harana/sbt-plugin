@@ -132,28 +132,26 @@ object Settings {
                                                   },
                                                 )
 
-  val javaLaunchOptions                        = if (javaVersion > 9) Seq(
-                                                      s"--add-modules=jdk.${if (javaVersion >= 19) "lang" else "incubator"}.foreign",
-                                                      "--add-opens=java.base/java.io=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.lang=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.math=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.net=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.security=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.text=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.util.concurrent.locks=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
-                                                      "--add-opens=java.base/java.util=ALL-UNNAMED",
-                                                      "--add-opens=java.base/jdk.internal.reflect=ALL-UNNAMED",
-                                                      "--add-opens=java.base/sun.security.pkcs=ALL-UNNAMED",
-                                                      "--add-opens=java.base/sun.security.rsa=ALL-UNNAMED",
-                                                      "--add-opens=java.base/sun.security.x509=ALL-UNNAMED",
-                                                      "--add-opens=java.management/javax.management.openmbean=ALL-UNNAMED",
-                                                      "--add-opens=java.management/javax.management=ALL-UNNAMED",
-                                                      "--add-opens=java.naming/javax.naming=ALL-UNNAMED",
-                                                      "--add-opens=java.sql/java.sql=ALL-UNNAMED"
-                                                    ) else Seq()
+
+  val javaLaunchOptions                        = Seq("--add-opens=java.base/java.io=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.lang=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.math=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.net=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.security=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.text=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.util.concurrent.locks=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+                                                     "--add-opens=java.base/java.util=ALL-UNNAMED",
+                                                     "--add-opens=java.base/jdk.internal.reflect=ALL-UNNAMED",
+                                                     "--add-opens=java.base/sun.security.pkcs=ALL-UNNAMED",
+                                                     "--add-opens=java.base/sun.security.rsa=ALL-UNNAMED",
+                                                     "--add-opens=java.base/sun.security.x509=ALL-UNNAMED",
+                                                     "--add-opens=java.management/javax.management.openmbean=ALL-UNNAMED",
+                                                     "--add-opens=java.management/javax.management=ALL-UNNAMED",
+                                                     "--add-opens=java.naming/javax.naming=ALL-UNNAMED",
+                                                     "--add-opens=java.sql/java.sql=ALL-UNNAMED")
 
   val jvm = Seq(
     unmanagedBase                             := (ThisProject / unmanagedBase).value,
