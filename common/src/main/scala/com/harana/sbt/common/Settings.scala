@@ -133,7 +133,7 @@ object Settings {
                                                 )
 
   val javaLaunchOptions                        = if (javaVersion > 9) Seq(
-                                                      "--add-modules=jdk.incubator.foreign",
+                                                      s"--add-modules=jdk.${if (javaVersion > 19) "lang" else "incubator"}.foreign",
                                                       "--add-opens=java.base/java.io=ALL-UNNAMED",
                                                       "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
                                                       "--add-opens=java.base/java.lang=ALL-UNNAMED",
