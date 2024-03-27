@@ -429,7 +429,7 @@ object Library {
   val airtable = Def.setting("dev.fuxing" % "airtable-api" % "0.3.2")
   val auth0 = Def.setting("com.auth0" % "auth0" % "2.10.1")
   val automapper = Def.setting("io.bfil"  %% "automapper" % "0.7.0")
-  val avro4s = Def.setting("com.sksamuel.avro4s" %% "avro4s-core" % "5.0.9")
+  val avro4s = Def.setting("com.sksamuel.avro4s" %% "avro4s-core" % "4.1.2")
   val awsJavaCloudfront = Def.setting("com.amazonaws" % "aws-java-sdk-cloudfront" % "1.12.687" excludeJackson)
   val awsJavaSes = Def.setting("com.amazonaws" % "aws-java-sdk-ses" % "1.12.687")
   val awsJavaS3 = Def.setting("com.amazonaws" % "aws-java-sdk-s3" % "1.12.687" excludeJackson)
