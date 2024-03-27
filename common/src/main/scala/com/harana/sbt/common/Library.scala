@@ -339,13 +339,14 @@ object Library {
     "me.shadaj" %%% "slinky-web" % slinkyVersion,
   ))
 
+  val sparkVersion = "3.5.1"
   val spark = Def.setting {
     Seq(
-      "org.apache.spark" %% "spark-core" % "3.4.2",
-      "org.apache.spark" %% "spark-hive" % "3.4.2",
-      "org.apache.spark" %% "spark-mllib" % "3.4.2",
-      "org.apache.spark" %% "spark-sql" % "3.4.2",
-      "org.apache.spark" %% "spark-streaming" % "3.4.2"
+      "org.apache.spark" %% "spark-core" % sparkVersion,
+      "org.apache.spark" %% "spark-hive" % sparkVersion,
+      "org.apache.spark" %% "spark-mllib" % sparkVersion,
+      "org.apache.spark" %% "spark-sql" % sparkVersion,
+      "org.apache.spark" %% "spark-streaming" % sparkVersion
     )
   }
 
@@ -466,7 +467,7 @@ object Library {
   val javaxInject = Def.setting("javax.inject" % "javax.inject" % "1")
   val jbrowserDriver = Def.setting("com.machinepublishers" % "jbrowserdriver" % "1.1.1")
   val jgit = Def.setting("org.eclipse.jgit" % "org.eclipse.jgit" % "6.1.0.202203080745-r")
-  val jose = Def.setting("com.nimbusds" % "nimbus-jose-jwt" % "9.30.2")
+  val jose = Def.setting("com.nimbusds" % "nimbus-jose-jwt" % "9.37.3")
   val jose4j = Def.setting("org.bitbucket.b_c" % "jose4j" % "0.9.3")
   val jsch = Def.setting("com.jcraft" % "jsch" % "0.1.55")
   val json = Def.setting("org.json" % "json" % "20230227")
@@ -480,9 +481,9 @@ object Library {
   val mixpanel = Def.setting("com.mixpanel" % "mixpanel-java" % "1.5.2")
   val mongodbScala = Def.setting("org.mongodb.scala" %% "mongo-scala-driver" % "5.0.0")
   val nscalaTime = Def.setting("com.github.nscala-time" %% "nscala-time" % "2.32.0")
-  val ognl = Def.setting("ognl" % "ognl" % "3.4.2")
+  val ognl = Def.setting("ognl" % "ognl" % sparkVersion)
   val ohc = Def.setting("org.caffinitas.ohc" % "ohc-core" % "0.7.4")
-  val opencsv = Def.setting("com.opencsv" % "opencsv"% "5.7.1")
+  val opencsv = Def.setting("com.opencsv" % "opencsv" % "5.9")
   val parboiled = Def.setting("org.parboiled" %% "parboiled" % "2.5.1")
   val playJsonExtensions = Def.setting("ai.x" %% "play-json-extensions" % "0.42.0")
   val plexusUtils = Def.setting("org.codehaus.plexus" % "plexus-utils" % "4.0.0")
@@ -497,7 +498,7 @@ object Library {
   val scalate = Def.setting("org.scalatra.scalate" %% "scalate-core" % "1.9.8")
   val scalazCore = Def.setting("org.scalaz" %%% "scalaz-core" % "7.3.3")
   val scopt = Def.setting("com.github.scopt" %% "scopt" % "4.1.0")
-  val segment = Def.setting("com.segment.analytics.java" % "analytics" % "3.4.0")
+  val segment = Def.setting("com.segment.analytics.java" % "analytics" % "3.5.1")
   val sentry = Def.setting("io.sentry" % "sentry" % "7.6.0")
   val shapeless = Def.setting("com.chuusai" %% "shapeless" % "2.3.10")
   val shopify = Def.setting("com.channelape" % "shopify-sdk" % "2.8.0" excludeAll(ExclusionRule(organization = "com.sun.xml.bind")))
@@ -522,10 +523,10 @@ object Library {
   val webjarsLocator = Def.setting("org.webjars" % "webjars-locator-core" % "0.52c")
   val xmlApis = Def.setting("xml-apis" % "xml-apis" % "2.0.2")
   val youiClient = Def.setting("io.youi" %% "youi-client" % "0.14.4")
-  val zendeskClient = Def.setting("com.cloudbees.thirdparty" % "zendesk-java-client" % "0.21.0")
+  val zendeskClient = Def.setting("com.cloudbees.thirdparty" % "zendesk-java-client" % "0.25.0")
   val zeroAllocationHashing = Def.setting("net.openhft" % "zero-allocation-hashing" % "0.16")
-  val zip4j = Def.setting("net.lingala.zip4j" % "zip4j" % "2.11.4")
-  val zstd = Def.setting("com.github.luben" % "zstd-jni" % "1.5.5-11")
+  val zip4j = Def.setting("net.lingala.zip4j" % "zip4j" % "2.11.5")
+  val zstd = Def.setting("com.github.luben" % "zstd-jni" % "1.5.5-4")
   val ztZip = Def.setting("org.zeroturnaround" % "zt-zip" % "1.15")
 
   // Dependencies for swagger-client generated code
