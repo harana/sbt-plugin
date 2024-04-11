@@ -55,7 +55,7 @@ object Library {
     "org.json4s"              %%  "json4s-ext"                  % "3.7.0-M11",
     "org.scala-lang.modules"  %%  "scala-parser-combinators"    % "2.1.1",
     "org.slf4j"               %   "slf4j-api"                   % "1.7.36",
-    "io.spray"                %%% "spray-json"                  % "1.4.0",
+    "io.spray"                %%% "spray-json"                  % "1.3.6",
     "org.codehaus.janino"     %   "janino"                      % "3.1.9"
   ))
 
