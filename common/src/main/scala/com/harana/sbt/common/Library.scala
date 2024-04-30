@@ -481,7 +481,7 @@ object Library {
   val mixpanel = Def.setting("com.mixpanel" % "mixpanel-java" % "1.5.2")
   val mongodbScala = Def.setting("org.mongodb.scala" %% "mongo-scala-driver" % "5.0.0")
   val nscalaTime = Def.setting("com.github.nscala-time" %% "nscala-time" % "2.32.0")
-  val ognl = Def.setting("ognl" % "ognl" % sparkVersion)
+  val ognl = Def.setting("ognl" % "ognl" % "3.4.3")
   val ohc = Def.setting("org.caffinitas.ohc" % "ohc-core" % "0.7.4")
   val opencsv = Def.setting("com.opencsv" % "opencsv" % "5.9")
   val parboiled = Def.setting("org.parboiled" %% "parboiled" % "2.5.1")
