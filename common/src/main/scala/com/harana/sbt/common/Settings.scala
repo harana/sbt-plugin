@@ -68,7 +68,7 @@ object Settings {
     unmanagedBase                                 := (ThisProject / unmanagedBase).value,
     libraryDependencySchemes                      ++= Library.jsLibraryDependencySchemes.value,
     externalNpm                                   := {
-                                                        sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
+                                                        sys.process.Process(Seq("pnpm", "-C", baseDirectory.value.toString, "install")).!
                                                         baseDirectory.value
                                                       },
     stIgnore                                      ++= List(
