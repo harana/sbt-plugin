@@ -123,10 +123,12 @@ object Settings {
                                                   },
     buildFrontend                                 := {
                                                     val (report, fm) = frontendReport.value
+                                                    val resources = baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "public" / "js"
                                                     IO.listFiles(fm).toList.map { file =>
                                                       val (name, ext) = file.baseAndExt
                                                       val out = baseDirectory.value / "target" / (name + "." + ext)
                                                       IO.copyFile(file, out)
+                                                      if (resources.exists()) IO.copyFile(file, resources / (name + "." + ext))
                                                       file.name -> out
                                                     }.toMap
                                                   },
