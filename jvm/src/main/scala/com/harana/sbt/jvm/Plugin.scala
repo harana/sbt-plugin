@@ -26,7 +26,7 @@ object Plugin extends AutoPlugin {
           unmanagedBase := (ThisBuild / baseDirectory).value / "lib",
           libraryDependencies ++= Library.common.value,
           libraryDependencies ++= Library.jvm.value,
-          libraryDependencySchemes ++= Library.jvmLibraryDependencySchemes.value,
+          libraryDependencySchemes ++= Library.libraryDependencySchemes.value,
           dependencyOverrides ++= Library.globalDependencyOverrides.value,
           excludeDependencies ++= Library.globalExclusions.value
         )

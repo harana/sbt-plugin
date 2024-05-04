@@ -16,9 +16,9 @@ import org.scalajs.linker.interface.Report
 
 object Settings {
 
-  lazy val buildFrontend = taskKey[Unit]("")
   lazy val buildCss = taskKey[Unit]("")
-  lazy val frontendReport = taskKey[(Report, File)]("")
+  lazy val buildJs = taskKey[Unit]("")
+  lazy val buildOutputDir = taskKey[(Report, File)]("")
   lazy val isRelease = sys.env.get("RELEASE").contains("true")
 
   def common = Seq(
@@ -66,18 +66,31 @@ object Settings {
     Global / onChangedBuildSource                 := ReloadOnSourceChanges,
     scalaJSLinkerConfig                           ~= (_.withModuleKind(ModuleKind.ESModule)),
     unmanagedBase                                 := (ThisProject / unmanagedBase).value,
-    libraryDependencySchemes                      ++= Library.jsLibraryDependencySchemes.value,
+    libraryDependencySchemes                      ++= Library.libraryDependencySchemes.value,
     externalNpm                                   := {
-                                                        sys.process.Process(Seq("pnpm", "-C", baseDirectory.value.toString, "install")).!
+                                                        sys.process.Process(Seq("pnpm", "--silent", "--cwd", baseDirectory.value.toString)).!
                                                         baseDirectory.value
-                                                      },
+                                                     },
     stIgnore                                      ++= List(
+                                                        "@nivo/core",
+                                                        "@scala-js/vite-plugin-scalajs",
+                                                        "@sentry/vite-plugin",
+                                                        "@tauri-apps/cli",
+                                                        "@vitejs/plugin-react",
+                                                        "autoprefixer",
+                                                        "d3",
+                                                        "howler",
+                                                        "postcss",
+                                                        "react",
+                                                        "react-dom",
+                                                        "react-helmet",
                                                         "@headlessui/react",
                                                         "@heroicons/react",
                                                         "@lit/reactive-element",
                                                         "@mapbox/togeojson",
                                                         "@niivue/niivue",
                                                         "@shoelace-style/shoelace",
+                                                        "react-gtm-module-nonce-aware",
                                                         "@tailwindcss/aspect-ratio",
                                                         "@tailwindcss/forms",
                                                         "@tailwindcss/typography",
@@ -105,35 +118,27 @@ object Settings {
                                                         "xlsx-viewer"
                                                       ),
     stFlavour                                     := Flavour.Slinky,
-    stIncludeDev                                  := true,
     stMinimize                                    := Selection.AllExcept("@tauri-apps/api"),
     stOutputPackage                               := "com.harana.js",
+    stEnableLongApplyMethod                       := true,
     Global / stQuiet                              := true,
     Compile / packageSrc / mappings               ++= {
                                                     val base = (Compile / sourceManaged).value
                                                     val files = (Compile / managedSources).value
                                                     files.map { f => (f, f.relativeTo(base).get.getPath) }
                                                   },
-    frontendReport                                := {
+    buildOutputDir                                := {
                                                     if (isRelease) (Compile / fullLinkJS).value.data -> (Compile / fullLinkJS / scalaJSLinkerOutputDirectory).value
                                                     else (Compile / fastLinkJS).value.data -> (Compile / fastLinkJS / scalaJSLinkerOutputDirectory).value
                                                   },
     buildCss                                      := {
-                                                    s"pnpm run --dir ${baseDirectory.value.toString} css" !
+                                                    s"pnpm run --dir ${baseDirectory.value.toString} build-css" !
                                                   },
-    buildFrontend                                 := {
-                                                    val (report, fm) = frontendReport.value
-                                                    val resources = baseDirectory.value / ".." / "jvm" / "src" / "main" / "resources" / "public" / "js"
-                                                    IO.listFiles(fm).toList.map { file =>
-                                                      val (name, ext) = file.baseAndExt
-                                                      val out = baseDirectory.value / "target" / (name + "." + ext)
-                                                      IO.copyFile(file, out)
-                                                      if (resources.exists()) IO.copyFile(file, resources / (name + "." + ext))
-                                                      file.name -> out
-                                                    }.toMap
+    buildJs                                       := {
+                                                    val (_, outputDir) = buildOutputDir.value
+                                                    s"pnpm run --dir ${baseDirectory.value.toString} build-js" !
                                                   },
                                                 )
-
 
   val javaLaunchOptions                        = Seq("--add-opens=java.base/java.io=ALL-UNNAMED",
                                                      "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",

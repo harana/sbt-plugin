@@ -59,13 +59,10 @@ object Library {
     "org.codehaus.janino"     %   "janino"                      % "3.1.9"
   ))
 
-  val jvmLibraryDependencySchemes = Def.setting(Seq(
+  val libraryDependencySchemes = Def.setting(Seq(
     "io.circe"               %% "circe-core"                % VersionScheme.Always,
     "org.scala-lang.modules" %% "scala-java8-compat"        % VersionScheme.Always,
     "org.scala-lang.modules" %% "scala-parser-combinators"  % VersionScheme.Always,
-  ))
-
-  val jsLibraryDependencySchemes = Def.setting(Seq(
     "io.circe"               %% "circe-core_sjs1"           % VersionScheme.Always,
     "io.circe"               %% "circe-core_sjs1_2.13"      % VersionScheme.Always,
     "org.scala-lang.modules" %% "scala-xml"                 % VersionScheme.Always
@@ -416,15 +413,15 @@ object Library {
   ))
 
   val zio2 = Def.setting(Seq(
-    "dev.zio" %% "zio" % "2.0.21",
-    "dev.zio" %% "zio-interop-cats" % "23.0.03",
+    "dev.zio" %% "zio" % "2.0.22",
+    "dev.zio" %% "zio-interop-cats" % "23.1.0.2",
     "dev.zio" %% "zio-interop-reactivestreams" % "2.0.2",
-    "dev.zio" %% "zio-macros" % "2.0.21",
+    "dev.zio" %% "zio-macros" % "2.0.22",
     "dev.zio" %% "zio-process" % "0.7.2",
-    "dev.zio" %% "zio-streams" % "2.0.21",
-    "dev.zio" %% "zio-test" % "2.0.21" % "test",
-    "dev.zio" %% "zio-test-sbt" % "2.0.21" % "test",
-    "dev.zio" %% "zio-test-magnolia" % "2.0.21" % "test"
+    "dev.zio" %% "zio-streams" % "2.0.22",
+    "dev.zio" %% "zio-test" % "2.0.22" % "test",
+    "dev.zio" %% "zio-test-sbt" % "2.0.22" % "test",
+    "dev.zio" %% "zio-test-magnolia" % "2.0.22" % "test"
   ))
 
   val airtable = Def.setting("dev.fuxing" % "airtable-api" % "0.3.2")
