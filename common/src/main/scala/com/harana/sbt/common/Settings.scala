@@ -22,7 +22,7 @@ object Settings {
   lazy val isRelease = sys.env.get("RELEASE").contains("true")
 
   def common = Seq(
-    scalaVersion                              := "2.13.12",
+    scalaVersion                              := "2.13.14",
     scalacOptions                             := Seq(
                                                     "-deprecation",
                                                     "-feature",
