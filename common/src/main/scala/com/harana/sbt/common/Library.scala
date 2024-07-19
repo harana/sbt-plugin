@@ -197,7 +197,12 @@ object Library {
 
   val micrometer = Def.setting(Seq(
     "io.github.mweirauch" % "micrometer-jvm-extras" % "0.2.2",
+<<<<<<< HEAD
     "io.micrometer" % "micrometer-registry-prometheus" % "1.13.2"
+=======
+    "io.micrometer" % "micrometer-registry-prometheus" % "1.13.2",
+    "io.micrometer" % "micrometer-registry-prometheus-simpleclient" % "1.13.2"
+>>>>>>> 16089ac (Updates)
   ))
 
   val netty = Def.setting(Seq(
