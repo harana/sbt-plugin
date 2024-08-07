@@ -3,7 +3,6 @@ package com.harana.sbt.common
 import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport.*
 import sbt.Keys.{resolvers, scalaVersion}
 import sbt.*
-import scalajsbundler.util.JSON
 import sbtghpackages.GitHubPackagesPlugin.autoImport.*
 
 import scala.language.postfixOps

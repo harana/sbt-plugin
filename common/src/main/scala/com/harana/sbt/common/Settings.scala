@@ -23,7 +23,7 @@ object Settings {
 
   def common = Seq(
     scalaVersion                              := "2.13.14",
-    scalacOptions                             := Seq(
+    scalacOptions                             ++= Seq(
                                                     "-deprecation",
                                                     "-feature",
                                                     "-unchecked",
@@ -31,6 +31,8 @@ object Settings {
                                                     "-language:higherKinds",
                                                     "-language:implicitConversions",
                                                     "-language:postfixOps",
+                                                    s"-Wconf:any:warning-verbose",
+                                                    s"-Wconf:msg=^Using fallback derivation.*$$:s",
                                                     "-Xmaxerrs", "10000",
                                                     "-Ymacro-annotations",
                                                     "-Yrangepos",
