@@ -327,7 +327,7 @@ object Library {
     "org.eclipse.sisu" % "org.eclipse.sisu.plexus" % "0.3.5"
   ))
 
-  val slinkyVersion = "0.7.4"
+  val slinkyVersion = "0.7.8+1-b6ed3519+20240809-2022"
   val slinky = Def.setting(Seq(
     "me.shadaj" %%% "slinky-core" % slinkyVersion,
     "me.shadaj" %%% "slinky-history"  % slinkyVersion,
