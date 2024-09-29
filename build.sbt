@@ -28,7 +28,7 @@ lazy val commonSettings = Seq(
       moduleName      := "sbt_common",
       name            := "sbt",
 
-      addSbtPlugin("ch.epfl.scala"                  % "sbt-scalafix"              % "0.11.1"),
+      addSbtPlugin("ch.epfl.scala"                  % "sbt-scalafix"              % "0.13.0"),
       addSbtPlugin("com.codecommit"                 % "sbt-github-packages"       % "0.5.3"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-assembly"              % "2.1.5"),
       addSbtPlugin("com.eed3si9n"                   % "sbt-buildinfo"             % "0.11.0"),
